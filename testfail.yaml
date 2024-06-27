@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-fail-exitcode
+spec:
+  containers:
+  - name: fail-container
+    image: busybox:latest
+    command: ["sh", "-c", "exit 1"]  # This command exits with code 1 (failure)
