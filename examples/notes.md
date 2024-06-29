@@ -2,19 +2,19 @@
 Installing an example node (test container with a webserver) [Minikube example]
 -  kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
 -  kubectl expose deployment hello-node --type=LoadBalancer --port=8080
-- If you are using a standard kubernetes cluster, type:  
-  - kubectl get services --sort-by=.metadata.name
-    - Make sure to note the port # under the ports column (i.e. 8080:30727/TCP), the one you are concern about is the '30727', if the external address column is NOT '<pending>' then use that.
-    - Otherwise, First determine which node the pod is running on (i.e. node01)
-      - kubectl get pods -o wide
-      - Type the command below, and use the address in the INTERNAL-IP, EXTERNAL-IP (172.30.1.2) for the node the pod is running on (i.e. node01).
-        - kubectl get nodes -o wide
-      - To see the output from the pod (this will have to be updated for your environment based on the instruction above), type: 
-        - curl http://172.30.1.2:30727; echo
-      - This should display out of something like: 'NOW: 2024-06-28 16:53:48.499882314 +0000 UTC m=+131.488826297'
 - If you are using minikube, type: 
   -  minikube service hello-node
   - You will see the results in your browser.
+- If you are using a standard kubernetes cluster, type:  
+  - kubectl get services --sort-by=.metadata.name
+    - Make sure to note the under the Ports column (i.e. 8080:30727/TCP), the number you are concern about is the '30727', if the External-IP column is NOT '<pending>' you can use that address.
+    - Otherwise, first determine which node the pod is running on (i.e. node01), type:
+      - kubectl get pods -o wide
+      - Type the command below, and use the address in the INTERNAL-IP (i.e. 172.30.1.2) for the node the pod is running on (i.e. node01).
+        - kubectl get nodes -o wide
+      - To see the output from the pod (this will have to be updated for your environment you are running based on the instruction above), type: 
+        - curl http://172.30.1.2:30727; echo
+      - This should display something like: 'NOW: 2024-06-28 16:53:48.499882314 +0000 UTC m=+131.488826297'
 - If you want to scale the deployment, first type the command below to see the status
   - kubectl get deployments
 Removing example node
