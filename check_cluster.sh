@@ -22,6 +22,32 @@
 
 # API cluster URI
 clusterAddress=$(kubectl config view | grep server| awk  '{print $2}')
+# Display and select the cluster name to use
+kubectl config view -o jsonpath='{"Cluster name\t|\tServer\n"}{range .clusters[*]}{.name}{"\t|\t"}{.cluster.server}{"\n"}{end}'
+read -p "Enter your cluster name (from the output above): " CLUSTER_NAME
+# Point to the API server referring the cluster name
+APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
+# Wait for the token controller to populate the secret with a token:
+while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
+  echo "waiting for token..." >&2
+  sleep 1
+done
+# Create a secret to hold a token for the default service account
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: default-token
+  annotations:
+    kubernetes.io/service-account.name: default
+type: kubernetes.io/service-account-token
+EOF
+# Get the token value
+TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
+# Explore the API with TOKEN
+echo "-----------"
+curl -X GET $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
+echo "-----------"
 
 #if [[ $1 == "--help" ]]; then
 #    echo -e "\n${BOLD_WHITE}Help Screen:${RESET}"
