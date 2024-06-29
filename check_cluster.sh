@@ -19,9 +19,11 @@
 # Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
-
 # API cluster URI
-clusterAddress=$(kubectl config view | grep server| awk  '{print $2}')
+#clusterAddress=$(kubectl config view | grep server| awk  '{print $2}')
+
+# Checks if the secret 'default-token' is already define, if so it will not try to create it again
+if ! kubectl describe secret default-token &> /dev/null; then 
 # Display and select the cluster name to use
 kubectl config view -o jsonpath='{"Cluster name\t|\tServer\n"}{range .clusters[*]}{.name}{"\t|\t"}{.cluster.server}{"\n"}{end}'
 read -p "Enter your cluster name (from the output above): " CLUSTER_NAME
@@ -42,7 +44,8 @@ metadata:
     kubernetes.io/service-account.name: default
 type: kubernetes.io/service-account-token
 EOF
-# Get the token value
+fi
+# Get the token value containing the secret token
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
 # Explore the API with TOKEN
 echo "-----------"
@@ -95,7 +98,7 @@ echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get all -A${RESET}"
 echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not 'ok']${RESET}\n${BOLD_MAGENTA}"
 # This Component Status command is deprecated
 #kubectl get componentstatus
-curl -ks https://$clusterAddress/livez?verbose # | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+#curl -ks https://$clusterAddress/livez?verbose # | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get deployments  -A
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
