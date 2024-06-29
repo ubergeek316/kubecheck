@@ -34,7 +34,7 @@ function downloadAndRun() {
 
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
-    downloadAndRun check_cluster.sh
+    downloadAndRun check_cluster.sh $2
     exit
 elif [ "$1" == "pod" ]; then
     # Check if a podname and namespace are being passed
@@ -70,7 +70,7 @@ elif [ "$1" == "refresh" ]; then
 else 
     echo -e "\n${BOLD_YELLOW}Help Information:"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster [--help|--logfiles]"
     echo -e "${BOLD_YELLOW}- To check a pod, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [podName]"
     echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
