@@ -110,6 +110,9 @@ echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${
 kubectl get events --sort-by=.metadata.creationTimestamp -A | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be install)${RESET}\n${BOLD_MAGENTA}"
 # Check if metrics-server deployment exists
+# To install the metrics-server
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# More information: https://kubernetes-sigs.github.io/metrics-server/
 metrics_server_deployment=$(kubectl get deployments -n kube-system 2>/dev/null | grep metrics-server)
 if [[ -z "$metrics_server_deployment" ]]; then
     echo -e "  ${BOLD_RED}Warning: Metrics server is not installed.${RESET}"
