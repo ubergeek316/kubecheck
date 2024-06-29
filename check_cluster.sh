@@ -84,8 +84,10 @@ echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volumes (NS: all)${RESET}\n${BO
 kubectl get persistentvolumes -o wide -A
 echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volume Claims (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get persistentvolumeclaims -o wide -A
-echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all)${RESET}\n"
-kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -zEi "warning |fail |error " || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Filtered) ${RESET}\n"
+kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${BOLD_MAGENTA}"
+kubectl get events --sort-by=.metadata.creationTimestamp -A | tail || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be install)${RESET}\n${BOLD_MAGENTA}"
 # Check if metrics-server deployment exists
 metrics_server_deployment=$(kubectl get deployments -n kube-system 2>/dev/null | grep metrics-server)
