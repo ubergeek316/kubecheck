@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ------------------------------------
 # Name:        Kube Checker (front-end)
 # Version:     1.0
@@ -39,11 +38,36 @@ elif [ "$1" == "pod" ]; then
         ./check_pod.sh
     fi
     exit
+elif [ "$1" == "cleanstorage" ]; then
+    check_system_clean_storage.sh
+elif [ "$1" == "network" ]; then
+    check_system_network.sh
+elif [ "$1" == "performance" ]; then
+    check_system_performance.sh
+elif [ "$1" == "processes" ]; then
+    check_system_processes.sh
+elif [ "$1" == "lastreboot" ]; then
+    check_system_reboot.sh
+elif [ "$1" == "storage" ]; then
+    check_system_storage.sh
 else 
-    echo "Help Information:"
-    echo "- To check a clsuter, type:"
-    echo "  kubecheck.sh cluster"
-    echo "- To check a pod, type:"
-    echo "  kubecheck.sh pod [podName] [podName]"
+    echo -e "\n${BOLD_YELLOW}Help Information:"
+    echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh cluster"
+    echo -e "${BOLD_YELLOW}- To check a pod, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh pod [podName] [podName]"
+    echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh cleanstorage"
+    echo -e "${BOLD_YELLOW}- To check the network subsystem for errors on a node , type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh network "
+    echo -e "${BOLD_YELLOW}- To check performance on a node, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh performance"
+    echo -e "${BOLD_YELLOW}- To check processes on a node, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh processes"
+    echo -e "${BOLD_YELLOW}- To check last reboot on a node, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh lastreboot"
+    echo -e "${BOLD_YELLOW}- To check storage on a node, type:"
+    echo -e "${BOLD_WHITE}  kubecheck.sh storage"
+    echo -e "${RESET}"
 fi
 
