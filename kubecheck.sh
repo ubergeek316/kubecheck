@@ -48,16 +48,25 @@ elif [ "$1" == "pod" ]; then
     exit
 elif [ "$1" == "cleanstorage" ]; then
     downloadAndRun check_system_clean_storage.sh
+    exit
 elif [ "$1" == "network" ]; then
     downloadAndRun check_system_network.sh
+    exit
 elif [ "$1" == "performance" ]; then
     downloadAndRun check_system_performance.sh
+    exit
 elif [ "$1" == "processes" ]; then
     downloadAndRun check_system_processes.sh
+    exit
 elif [ "$1" == "lastreboot" ]; then
     downloadAndRun check_system_reboot.sh
+    exit
 elif [ "$1" == "storage" ]; then
     downloadAndRun check_system_storage.sh
+    exit
+elif [ "$1" == "refresh" ]; then
+    curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
+    exit
 else 
     echo -e "\n${BOLD_YELLOW}Help Information:"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
@@ -76,6 +85,8 @@ else
     echo -e "${BOLD_WHITE}  ./kubecheck.sh lastreboot"
     echo -e "${BOLD_YELLOW}- To check storage on a node, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh storage"
+    echo -e "${BOLD_YELLOW}- To refresh the script with the latest version, type:"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh refresh"
     echo -e "${RESET}"
 fi
 
