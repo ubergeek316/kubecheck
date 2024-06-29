@@ -30,11 +30,6 @@ read -p "Enter your cluster name (from the output above): " CLUSTER_NAME
 # Point to the API server referring the cluster name
 APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
 echo "*** DEBUG: $APISERVER ****"
-# Wait for the token controller to populate the secret with a token:
-while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
-  echo "waiting for token..." >&2
-  sleep 1
-done
 # Create a secret to hold a token for the default service account
 kubectl apply -f - <<EOF
 apiVersion: v1
@@ -45,6 +40,11 @@ metadata:
     kubernetes.io/service-account.name: default
 type: kubernetes.io/service-account-token
 EOF
+# Wait for the token controller to populate the secret with a token:
+while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
+  echo "waiting for token..." >&2
+  sleep 1
+done
 fi
 # Get the token value containing the secret token
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)

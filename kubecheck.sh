@@ -27,7 +27,7 @@ export BOLD_WHITE='\033[1;37m'
 
 # Downloads and runs the script from the repository
 function downloadAndRun() {
-    curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1.sh
+    curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1.sh $2 $3
     rm $1.sh
     }   
