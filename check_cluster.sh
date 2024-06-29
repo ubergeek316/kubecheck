@@ -88,6 +88,8 @@ APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAM
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
 # Explore the API with TOKEN
 curl -X GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure
+echo "TOKEN     = $TOKEN"
+echo "APISERVER = $APISERVER"
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get deployments  -A
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
