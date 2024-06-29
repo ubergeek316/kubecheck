@@ -69,7 +69,6 @@ echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl debug node/[nodeName] 
 echo -e "${BOLD_WHITE}    - Deploys a pod to a node that you want to troubleshoot.${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Pods (NS: all) [Only displays problem pods, i.e. not 'running']${RESET}\n${BOLD_MAGENTA}"
 # Displays if any pods are not running correctly.
-# Not working correctly
 output=$(kubectl get pod -A -o wide --field-selector status.phase!=Running --all-namespaces) 
 #output=$(kubectl get pods -o wide -A | grep -v Running)
 #output=$(kubectl get pods -o wide -A)
@@ -82,7 +81,7 @@ echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not
 #kubectl get componentstatus
 #curl -ks https://$clusterAddress/livez?verbose # | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 # Points to the API server referring the cluster name
-CLUSTER_NAME=$(cat /tmp/test.cfg)
+CLUSTER_NAME=$(cat /tmp/check_cluster.cfg)
 APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
 # Gets the token value containing the secret token
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
