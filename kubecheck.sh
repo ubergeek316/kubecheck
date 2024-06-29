@@ -65,10 +65,11 @@ elif [ "$1" == "storage" ]; then
     downloadAndRun check_system_storage.sh
     exit
 elif [ "$1" == "refresh" ]; then
+    rm ./kubecheck.sh
     curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
     exit
 else 
-    echo -e "\n${BOLD_YELLOW}Help Information:"
+    echo -e "\n${BOLD_YELLOW}Help Information (version 1.0):"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster [--help|--logfiles]"
     echo -e "${BOLD_YELLOW}- To check a pod, type:"
