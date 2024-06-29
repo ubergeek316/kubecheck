@@ -57,9 +57,9 @@ else
     echo -e "${BOLD_GREEN}\n----- Cluster Pods (NS: all) [Only displays problem pods, i.e. not 'running']${RESET}\n${BOLD_MAGENTA}"
     # Displays if any pods are not running correctly.
     # Not working correctly
-    #output=$(kubectl get pod -n kube-system --field-selector status.phase!=Running --all-namespaces) 
+    output=$(kubectl get pod -A -o wide --field-selector status.phase!=Running --all-namespaces) 
     #output=$(kubectl get pods -o wide -A | grep -v Running)
-    output=$(kubectl get pods -o wide -A)
+    #output=$(kubectl get pods -o wide -A)
     echo -e "$output"
     echo -e "${BOLD_WHITE}\n ** Suggestion (More Info): kubectl get pods -A${RESET}"
     echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get all -A${RESET}"
