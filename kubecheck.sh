@@ -24,32 +24,39 @@ export BOLD_MAGENTA='\033[1;35m'
 export BOLD_CYAN='\033[1;36m'
 export BOLD_WHITE='\033[1;37m'
 
+# Downloads and runs the script from the repository
+function downloadAndRun() {
+    curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1.sh
+    source $1.sh
+    rm $1.sh
+    }   
+
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
-    ./check_cluster.sh
+    downloadAndRun check_cluster.sh
     exit
 elif [ "$1" == "pod" ]; then
     # Check if a podname and namespace are being passed
     if [ ! -z $2 ]; then
         # Checks a kubernetes pod (with parameters)
-        ./check_pod.sh $2 $3
+        downloadAndRun check_pod.sh $2 $3
     else
         # Checks a kubernetes pod (without parameters)
-        ./check_pod.sh
+        downloadAndRun check_pod.sh
     fi
     exit
 elif [ "$1" == "cleanstorage" ]; then
-    check_system_clean_storage.sh
+    downloadAndRun check_system_clean_storage.sh
 elif [ "$1" == "network" ]; then
-    check_system_network.sh
+    downloadAndRun check_system_network.sh
 elif [ "$1" == "performance" ]; then
-    check_system_performance.sh
+    downloadAndRun check_system_performance.sh
 elif [ "$1" == "processes" ]; then
-    check_system_processes.sh
+    downloadAndRun check_system_processes.sh
 elif [ "$1" == "lastreboot" ]; then
-    check_system_reboot.sh
+    downloadAndRun check_system_reboot.sh
 elif [ "$1" == "storage" ]; then
-    check_system_storage.sh
+    downloadAndRun check_system_storage.sh
 else 
     echo -e "\n${BOLD_YELLOW}Help Information:"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
