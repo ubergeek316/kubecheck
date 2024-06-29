@@ -19,6 +19,10 @@
 # Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
+# Global Variables
+defaultTailRows=10
+
+# This section is used to setup what is necessary to get the token to access the Kubernetes API
 # Checks if the secret 'default-token' is already define, if so it will not try to create it again
 if ! kubectl describe secret default-token &> /dev/null; then 
     echo -e "\n${BOLD_YELLOW}Generating access to check API connections:\n${RESET}${BOLD_WHITE}"
@@ -51,11 +55,8 @@ fi
 #if [[ $1 == "--help" ]]; then
 #    echo -e "\n${BOLD_WHITE}Help Screen:${RESET}"
 #    echo -e "${BOLD_WHITE}--help     - This display screen.${RESET}"
-#    echo -e "${BOLD_WHITE}--logfiles - Reference: displays log file location.${RESET}"
-# Obsolete (to be removed later, leaving for reference)
 #elif [[ $1 == "--logfiles" ]]; then
 #    echo -e "${BOLD_WHITE}\nLog Files Locations\n${RESET}"
-#else
 
 # Displays cluster status
 echo -e "\nCluster Status Checker\n----------------${RESET}"
@@ -86,29 +87,27 @@ APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAM
 # Gets the token value containing the secret token
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
 # Explore the API with TOKEN
-curl -X GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure
-echo "TOKEN     = $TOKEN"
-echo "APISERVER = $APISERVER"
+curl -X GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure  | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get deployments  -A
+kubectl get deployments -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get daemonsets  -A
+kubectl get daemonsets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments Status${RESET}\n${BOLD_MAGENTA}"
-kubectl rollout status deployment
+kubectl rollout status deployment | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Replicasets (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get replicasets  -A
+kubectl get replicasets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Services (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get services -o wide -A
+kubectl get services -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Endpoints (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get endpoints -o wide -A
+kubectl get endpoints -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volumes (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get persistentvolumes -o wide -A
+kubectl get persistentvolumes -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volume Claims (NS: all)${RESET}\n${BOLD_MAGENTA}"
-kubectl get persistentvolumeclaims -o wide -A
+kubectl get persistentvolumeclaims -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Filtered) ${RESET}\n"
-kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " | tail || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${BOLD_MAGENTA}"
-kubectl get events --sort-by=.metadata.creationTimestamp -A | tail || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+kubectl get events --sort-by=.metadata.creationTimestamp -A | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be install)${RESET}\n${BOLD_MAGENTA}"
 # Check if metrics-server deployment exists
 metrics_server_deployment=$(kubectl get deployments -n kube-system 2>/dev/null | grep metrics-server)
@@ -116,17 +115,17 @@ if [[ -z "$metrics_server_deployment" ]]; then
     echo -e "  ${BOLD_RED}Warning: Metrics server is not installed.${RESET}"
 else
     echo -e "${BOLD_CYAN}\n-- Top Nodes --${RESET}${BOLD_MAGENTA}\n"
-    kubectl top nodes 
+    kubectl top nodes  | tail -n $defaultTailRows
     echo -e "${BOLD_CYAN}\n-- Top Pods --${RESET}${BOLD_MAGENTA}\n"
-    kubectl top pods
+    kubectl top pods | tail -n $defaultTailRows
 fi
 echo -e "${BOLD_GREEN}\n----- Checking Container Processes${RESET}\n${BOLD_MAGENTA}"
 if command -v docker >/dev/null 2>&1; then
     criRuntime="docker"
-    docker ps 
+    docker ps  | tail -n $defaultTailRows
 elif command -v podman >/dev/null 2>&1; then
     criRuntime="podman"
-    podman ps
+    podman ps | tail -n $defaultTailRows
 fi
 echo -e "${BOLD_GREEN}\n----- Additional Troubleshooting Commands:${RESET}\n"
 #echo -e "${BOLD_YELLOW}- kubectl config view${RESET}"
