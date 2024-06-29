@@ -1,21 +1,21 @@
 #!/bin/bash
-# Define default namespace (modify as needed)
-default_namespace="default"
+# Defines default namespace (modify as needed)
+namespace="default"
 
 # Help message
-help_message="Usage: $(basename "$0") [OPTIONS] [NAMESPACE]\n\nSelects a pod from a list of running pods in the specified namespace (or default namespace if none provided).\n\n  -h, --help      Display this help message.\n  -n, --namespace  Specify the namespace to list pods from.\n"
+help_message="Usage: $(basename "$0") [OPTIONS] [NAMESPACE]\n\nSelects a pod from a list of running pods in the specified namespace (or default namespace if none provided).\n\n  -h      Display this help message.\n  -n      Specify the namespace to list pods from.\n"
 
 # Process arguments using getopts
-while getopts ":h:n:" opt; do
+while getopts "hn:" opt; do
   case "$opt" in
-    h|\?)
+    h)
       echo -e "$help_message"
       exit 0
       ;;
     n)
       namespace="$OPTARG"
       ;;
-    \?)
+    *)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
       ;;
@@ -25,13 +25,8 @@ done
 # Shift arguments to remove processed options
 shift $((OPTIND-1))
 
-# Check if a namespace is provided (after processing options)
-if [[ $# -eq 0 ]]; then
-  namespace="$default_namespace"
-  echo "Using default namespace: $namespace"
-else
-  namespace="$1"
-fi
+# Displays the current namespace
+echo -e "\n-----Using namespace: $namespace"
 
 # Check if kubectl is available
 if ! command -v kubectl >/dev/null 2>&1; then
