@@ -9,20 +9,38 @@
 # Update:      15-June-2024
 # Sytax:       ./check_pod.sh podName [nameSpace]
 # Example:     ./check_pod.sh storage-provisioner kube-system
+# Notes:
+# - ANSI color aliases are setup in the kubecheck.sh file
+# - kubecheck.sh file is the frontend files, and should be run to control this script.
 # -----------------------------------
 
-# ANSI Color Aliases
-# Reset color (default terminal colors)
-RESET='\033[0m'
-# Foreground colors
-BOLD_BLACK='\033[1;30m'
-BOLD_RED='\033[1;31m'
-BOLD_GREEN='\033[1;32m'
-BOLD_YELLOW='\033[1;33m'
-BOLD_BLUE='\033[1;34m'
-BOLD_MAGENTA='\033[1;35m'
-BOLD_CYAN='\033[1;36m'
-BOLD_WHITE='\033[1;37m'
+#----------- For Future Use (begin) ----------------
+# Defines default namespace (modify as needed)
+#namespace="default"
+
+# Help message
+#help_message="Usage: $(basename "$0") [OPTIONS] [NAMESPACE]\n\nSelects a pod from a list of running pods in the specified namespace (or default namespace if none provided).\n\n  -h      Display this help message.\n  -n      Specify the namespace to list pods from.\n"
+
+# Process arguments using getopts
+#while getopts "hn:" opt; do
+#  case "$opt" in
+#    h)
+#      echo -e "$help_message"
+#      exit 0
+#      ;;
+#    n)
+#      namespace="$OPTARG"
+#      ;;
+#    *)
+#      echo "Invalid option: -$OPTARG" >&2
+#      exit 1
+#      ;;
+#  esac
+#done
+
+# Shift arguments to remove processed options
+#shift $((OPTIND-1))
+#----------- For Future Use (end) ----------------
 
 if [[ $1 == "--help" ]]; then
     echo -e "\n${BOLD_WHITE}Help Screen:${RESET}"
@@ -30,7 +48,7 @@ if [[ $1 == "--help" ]]; then
 elif [[ -z $1 || "$1" == "" ]]; then 
     # Display a menu of related running pods
     # Note: ** need to fix the namespace feature **
-    source check_pod_select.sh
+    ./check_pod_select.sh
     exit
 else
     # Displays pod status

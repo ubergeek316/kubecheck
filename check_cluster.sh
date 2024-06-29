@@ -14,20 +14,11 @@
 # Update:      15-June-2024
 # Sytax:       ./check_cluster.sh [--help|--logfiles]
 # Example:     ./check_cluster.sh 
+# Notes: 
+# - ANSI color aliases are setup in the kubecheck.sh file
+# - kubecheck.sh file is the frontend files, and should be run to control this script.
 # -----------------------------------
 
-# ANSI Color Aliases
-# Reset color (default terminal colors)
-RESET='\033[0m'
-# Foreground colors
-BOLD_BLACK='\033[1;30m'
-BOLD_RED='\033[1;31m'
-BOLD_GREEN='\033[1;32m'
-BOLD_YELLOW='\033[1;33m'
-BOLD_BLUE='\033[1;34m'
-BOLD_MAGENTA='\033[1;35m'
-BOLD_CYAN='\033[1;36m'
-BOLD_WHITE='\033[1;37m'
 
 # API cluster URI
 clusterAddress="localhost:46287"
@@ -124,24 +115,3 @@ else
     #echo -e "${BOLD_WHITE}- ${RESET}"
 fi
 echo ""
-# Installing an example node (test container with a webserver) [Minikube example]
-# kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
-# kubectl expose deployment hello-node --type=LoadBalancer --port=8080
-# minikube service hello-node
-# Removing example node
-# kubectl delete service hello-node
-# kubectl delete deployment hello-node
-
-# Installing the node-problem-detector
-# kubectl apply -f https://k8s.io/examples/debug/node-problem-detector.yaml
-# Checking the node-problem-detector
-# kubectl get pods -n kube-system node-problem-detector[press Tab to finish]
-# kubectl describe pod -n kube-system node-problem-detector[press Tab to finish]
-# kubectl logs -n kube-system node-problem-detector[press Tab to finish
-# Removing the node-problem-detector
-# kubectl delete daemonset node-problem-detector-v0.1 -n kube-system]
-
-# Installing a failed pod
-# kubectl apply -f kubernetes/testfail.yaml
-# Deleting the failed pod
-# kubectl delete pod test-fail-exitcode
