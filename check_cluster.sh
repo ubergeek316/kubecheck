@@ -29,6 +29,7 @@ kubectl config view -o jsonpath='{"Cluster name\t|\tServer\n"}{range .clusters[*
 read -p "Enter your cluster name (from the output above): " CLUSTER_NAME
 # Point to the API server referring the cluster name
 APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
+echo "*** DEBUG: $APISERVER ****"
 # Wait for the token controller to populate the secret with a token:
 while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
   echo "waiting for token..." >&2
