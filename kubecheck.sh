@@ -73,7 +73,7 @@ else
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster [--help|--logfiles]"
     echo -e "${BOLD_YELLOW}- To check a pod, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [podName]"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [nameSpace]"
     echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh cleanstorage"
     echo -e "${BOLD_YELLOW}- To check the network subsystem for errors on a node , type:"

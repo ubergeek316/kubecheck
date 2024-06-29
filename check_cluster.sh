@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ------------------------------------
 # Name:        Cluster Status Checker
 # Version:     1.0
@@ -12,7 +11,7 @@
 #              - The ability to query Container Runtime
 #              - Checking any system information, CPU, Memory, Storage, Network
 # Update:      15-June-2024
-# Sytax:       ./check_cluster.sh [--help|--logfiles]
+# Sytax:       ./check_cluster.sh [--help|
 # Example:     ./check_cluster.sh 
 # Notes: 
 # - ANSI color aliases are setup in the kubecheck.sh file
@@ -22,27 +21,28 @@
 
 
 # API cluster URI
-clusterAddress="localhost:46287"
+clusterAddress=$(kubectl config view | grep server| awk  '{print $2}')
 if [[ $1 == "--help" ]]; then
     echo -e "\n${BOLD_WHITE}Help Screen:${RESET}"
     echo -e "${BOLD_WHITE}--help     - This display screen.${RESET}"
     echo -e "${BOLD_WHITE}--logfiles - Reference: displays log file location.${RESET}"
-elif [[ $1 == "--logfiles" ]]; then
-    echo -e "${BOLD_WHITE}\nLog Files Locations\n${RESET}"
-    echo -e "${BOLD_WHITE}- /var/log/kube-apiserver.log${RESET}"
-    echo -e "${BOLD_WHITE}  - API Server, responsible for serving the API${RESET}"
-    echo -e "${BOLD_WHITE}- /var/log/kube-scheduler.log${RESET}"
-    echo -e "${BOLD_WHITE}  - Scheduler, responsible for making scheduling decisions${RESET}"
-    echo -e "${BOLD_WHITE}- /var/log/kube-controller-manager.log{RESET}"
-    echo -e "${BOLD_WHITE}  - A component that runs most Kubernetes built-in controllers,"
-    echo -e              "    with the notable exception of scheduling (the kube-scheduler"
-    echo -e              "    handles scheduling).${RESET}"
-    echo -e "${BOLD_WHITE}- /var/log/kubelet.log${RESET}"
-    echo -e "${BOLD_WHITE}  - logs from the kubelet, responsible for running containers" 
-    echo -e              "    on the node${RESET}"
-    echo -e "${BOLD_WHITE}- /var/log/kube-proxy.log${RESET}"
-    echo -e "${BOLD_WHITE}  - logs from kube-proxy, which is responsible for directing "
-    echo -e              "    traffic to Service endpoints.${RESET}"
+# Obsolete (to be removed later, leaving for reference)
+#elif [[ $1 == "--logfiles" ]]; then
+#    echo -e "${BOLD_WHITE}\nLog Files Locations\n${RESET}"
+#    echo -e "${BOLD_WHITE}- /var/log/kube-apiserver.log${RESET}"
+#    echo -e "${BOLD_WHITE}  - API Server, responsible for serving the API${RESET}"
+#    echo -e "${BOLD_WHITE}- /var/log/kube-scheduler.log${RESET}"
+#    echo -e "${BOLD_WHITE}  - Scheduler, responsible for making scheduling decisions${RESET}"
+#    echo -e "${BOLD_WHITE}- /var/log/kube-controller-manager.log{RESET}"
+#    echo -e "${BOLD_WHITE}  - A component that runs most Kubernetes built-in controllers,"
+#    echo -e              "    with the notable exception of scheduling (the kube-scheduler"
+#    echo -e              "    handles scheduling).${RESET}"
+#    echo -e "${BOLD_WHITE}- /var/log/kubelet.log${RESET}"
+#    echo -e "${BOLD_WHITE}  - logs from the kubelet, responsible for running containers" 
+#    echo -e              "    on the node${RESET}"
+#    echo -e "${BOLD_WHITE}- /var/log/kube-proxy.log${RESET}"
+#    echo -e "${BOLD_WHITE}  - logs from kube-proxy, which is responsible for directing "
+#    echo -e              "    traffic to Service endpoints.${RESET}"
 else
     # Displays cluster status
     echo -e "\nCluster Status Checker\n----------------${RESET}"
