@@ -17,6 +17,7 @@
 # Notes: 
 # - ANSI color aliases are setup in the kubecheck.sh file
 # - kubecheck.sh file is the frontend files, and should be run to control this script.
+# Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
 

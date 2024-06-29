@@ -9,6 +9,7 @@
 # Update:      15-June-2024
 # Sytax:       ./check_system_reboot.sh
 # Example:     ./check_system_reboot.sh
+# Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
 # Script Defaults

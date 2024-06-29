@@ -1,4 +1,19 @@
 #!/bin/bash
+# ------------------------------------
+# Name:        Pod Status Checker (Menu System)
+# Version:     1.0
+# Author:      Jason Savitt
+# Description: Menu system for the Pod Status Checker 
+# Notes:       n/a
+# Update:      15-June-2024
+# Sytax:       ./check_pod_select.sh [-n nameSpace]
+# Example:     ./check_pod_select.sh -n kube-system
+# Notes:
+# - ANSI color aliases are setup in the kubecheck.sh file
+# - kubecheck.sh file is the frontend files, and should be run to control this script.
+# Warning:     For testing purposes only, use at your own risk.
+# -----------------------------------
+
 # Defines default namespace (modify as needed)
 namespace="default"
 

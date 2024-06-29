@@ -9,6 +9,7 @@
 # Sytax:       ./kubecheck.sh [cluster|pod] [[podName] [nameSpace]]
 # Example:     ./kubecheck.sh cluster
 # Example:     ./kubecheck.sh pod [podName] [nameSpace] 
+# Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
 # ANSI Color Aliases
@@ -60,21 +61,21 @@ elif [ "$1" == "storage" ]; then
 else 
     echo -e "\n${BOLD_YELLOW}Help Information:"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh cluster"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster"
     echo -e "${BOLD_YELLOW}- To check a pod, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh pod [podName] [podName]"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [podName]"
     echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh cleanstorage"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh cleanstorage"
     echo -e "${BOLD_YELLOW}- To check the network subsystem for errors on a node , type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh network "
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh network "
     echo -e "${BOLD_YELLOW}- To check performance on a node, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh performance"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh performance"
     echo -e "${BOLD_YELLOW}- To check processes on a node, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh processes"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh processes"
     echo -e "${BOLD_YELLOW}- To check last reboot on a node, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh lastreboot"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh lastreboot"
     echo -e "${BOLD_YELLOW}- To check storage on a node, type:"
-    echo -e "${BOLD_WHITE}  kubecheck.sh storage"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh storage"
     echo -e "${RESET}"
 fi
 
