@@ -19,18 +19,17 @@
 # Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
-# API cluster URI
-#clusterAddress=$(kubectl config view | grep server| awk  '{print $2}')
-
 # Checks if the secret 'default-token' is already define, if so it will not try to create it again
 if ! kubectl describe secret default-token &> /dev/null; then 
-# Display and select the cluster name to use
-kubectl config view -o jsonpath='{"Cluster name\t|\tServer\n"}{range .clusters[*]}{.name}{"\t|\t"}{.cluster.server}{"\n"}{end}'
-read -p "Enter your cluster name (from the output above): " CLUSTER_NAME
-# Point to the API server referring the cluster name
-APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
-echo "*** DEBUG: $APISERVER ****"
-# Create a secret to hold a token for the default service account
+    echo -e "\n${BOLD_YELLOW}Generating access to check API connections:\n${RESET}${BOLD_WHITE}"
+    # Display and select the cluster name to use
+    kubectl config view -o jsonpath='{"Cluster name\t|\tServer\n"}{range .clusters[*]}{.name}{"\t|\t"}{.cluster.server}{"\n"}{end}'
+    read -p "Enter your cluster name you want to use (from the output above): " CLUSTER_NAME
+    # Stores the cluster name for later use (does not writ)
+    echo "$CLUSTER_NAME" > /tmp/check_cluster.cfg
+
+# Create a secret in YAML to hold a token for the default service account
+# The indenting of this section is on purpose because of formating in VIM
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Secret
@@ -40,19 +39,15 @@ metadata:
     kubernetes.io/service-account.name: default
 type: kubernetes.io/service-account-token
 EOF
-# Wait for the token controller to populate the secret with a token:
-while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
-  echo "waiting for token..." >&2
-  sleep 1
-done
-fi
-# Get the token value containing the secret token
-TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
-# Explore the API with TOKEN
-echo "-----------"
-curl -X GET $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
-echo "-----------"
 
+    # Waits for the token controller to populate the secret with a token:
+    while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
+      echo "Waiting for token..." >&2
+      sleep 1
+    done
+fi
+
+# Left for future reference in case I want to have a menu option again
 #if [[ $1 == "--help" ]]; then
 #    echo -e "\n${BOLD_WHITE}Help Screen:${RESET}"
 #    echo -e "${BOLD_WHITE}--help     - This display screen.${RESET}"
@@ -60,20 +55,6 @@ echo "-----------"
 # Obsolete (to be removed later, leaving for reference)
 #elif [[ $1 == "--logfiles" ]]; then
 #    echo -e "${BOLD_WHITE}\nLog Files Locations\n${RESET}"
-#    echo -e "${BOLD_WHITE}- /var/log/kube-apiserver.log${RESET}"
-#    echo -e "${BOLD_WHITE}  - API Server, responsible for serving the API${RESET}"
-#    echo -e "${BOLD_WHITE}- /var/log/kube-scheduler.log${RESET}"
-#    echo -e "${BOLD_WHITE}  - Scheduler, responsible for making scheduling decisions${RESET}"
-#    echo -e "${BOLD_WHITE}- /var/log/kube-controller-manager.log{RESET}"
-#    echo -e "${BOLD_WHITE}  - A component that runs most Kubernetes built-in controllers,"
-#    echo -e              "    with the notable exception of scheduling (the kube-scheduler"
-#    echo -e              "    handles scheduling).${RESET}"
-#    echo -e "${BOLD_WHITE}- /var/log/kubelet.log${RESET}"
-#    echo -e "${BOLD_WHITE}  - logs from the kubelet, responsible for running containers" 
-#    echo -e              "    on the node${RESET}"
-#    echo -e "${BOLD_WHITE}- /var/log/kube-proxy.log${RESET}"
-#    echo -e "${BOLD_WHITE}  - logs from kube-proxy, which is responsible for directing "
-#    echo -e              "    traffic to Service endpoints.${RESET}"
 #else
 
 # Displays cluster status
@@ -100,6 +81,13 @@ echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not
 # This Component Status command is deprecated
 #kubectl get componentstatus
 #curl -ks https://$clusterAddress/livez?verbose # | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+# Points to the API server referring the cluster name
+CLUSTER_NAME=$(cat /tmp/test.cfg)
+APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
+# Gets the token value containing the secret token
+TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
+# Explore the API with TOKEN
+curl -X GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get deployments  -A
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
