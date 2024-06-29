@@ -72,13 +72,15 @@ echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not
 curl -ks https://$clusterAddress/livez?verbose # | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get deployments  -A
+echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
+kubectl get daemonsets  -A
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments Status${RESET}\n${BOLD_MAGENTA}"
 kubectl rollout status deployment
 echo -e "${BOLD_GREEN}\n----- Cluster Replicasets (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get replicasets  -A
 echo -e "${BOLD_GREEN}\n----- Cluster Services (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get services -o wide -A
-echo -e "${BOLD_GREEN}\n----- Cluster Services (NS: all)${RESET}\n${BOLD_MAGENTA}"
+echo -e "${BOLD_GREEN}\n----- Cluster Endpoints (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get endpoints -o wide -A
 echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volumes (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get persistentvolumes -o wide -A
