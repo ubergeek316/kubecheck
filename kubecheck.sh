@@ -71,7 +71,7 @@ elif [ "$1" == "refresh" ]; then
 else 
     echo -e "\n${BOLD_YELLOW}Help Information (version 1.0):"
     echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster [--help|--logfiles]"
+    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster"
     echo -e "${BOLD_YELLOW}- To check a pod, type:"
     echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [nameSpace]"
     echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
