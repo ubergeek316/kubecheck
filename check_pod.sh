@@ -15,6 +15,10 @@
 # Warning:     For testing purposes only, use at your own risk.
 # -----------------------------------
 
+# Global Variables
+defaultTailRows=10
+defaultGrepQuery="fail|warn|error|oom|dump|crash"
+
 #----------- For Future Use (begin) ----------------
 # Defines default namespace (modify as needed)
 #namespace="default"
@@ -65,11 +69,11 @@ else
     echo -e "\n${BOLD_WHITE}----- Display Pod${RESET}\n${BOLD_MAGENTA}"
     kubectl get pod $resourceName -n $nameSpace -o wide
     echo -e "\n${BOLD_WHITE}----- Describe Pod (nodeaffinity)${RESET}\n${BOLD_MAGENTA}"
-    kubectl describe pod $resourceName -n $nameSpace # | grep --color=always -iEz "error|warn|fail|true|false"
+    kubectl describe pod $resourceName -n $nameSpace # | grep --color=always -iEz $defaultGrepQuery
     echo -e "\n${BOLD_WHITE}----- Display Pod Events${RESET}\n${BOLD_MAGENTA}"
     kubectl get events --field-selector involvedObject.name=$resourceName -n $nameSpace
     echo -e "\n${BOLD_WHITE}----- Display Pod Logs${RESET}\n${BOLD_MAGENTA}"
-    kubectl logs $resourceName -n $nameSpace # | grep --color=always -iEz "error|warn|fail|true|false"
+    kubectl logs $resourceName -n $nameSpace # | grep --color=always -iEz $defaultGrepQuery
     echo -e "\n${BOLD_WHITE}----- Display Pod YAML${RESET}\n${BOLD_MAGENTA}"
     kubectl get pod $resourceName -n $nameSpace -o yaml
 fi
