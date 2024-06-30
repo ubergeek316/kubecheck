@@ -26,7 +26,9 @@ Removing example node
 - `kubectl delete deployment hello-node`
 
 ##  Installing the node-problem-detector
+
 Installing the node-problem-detector
+
 - `kubectl apply -f https://k8s.io/examples/debug/node-problem-detector.yaml`
 
 Checking the node-problem-detector
@@ -40,6 +42,7 @@ Removing the node-problem-detector
 - `kubectl delete daemonset node-problem-detector-v0.1 -n kube-system]`
 
 ## Installing a failed pod
+
 - `kubectl apply -f kubernetes/testfail.yaml`
 
 Deleting the failed pod
@@ -47,6 +50,7 @@ Deleting the failed pod
 - `kubectl delete pod test-fail-exitcode`
 
 ## Running a Test DockerFile
+
 - `vim Dockerfile`
 
 Contents of the Dockerfile
