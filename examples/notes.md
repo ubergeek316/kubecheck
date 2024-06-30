@@ -1,5 +1,7 @@
 # Example Notes
+
 Installing an example node (test container with a webserver) [Minikube example]
+
 - `kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080`
 - `kubectl expose deployment hello-node --type=LoadBalancer --port=8080`
 - If you are using minikube, type: 
@@ -17,23 +19,31 @@ Installing an example node (test container with a webserver) [Minikube example]
       - This should display something like: `NOW: 2024-06-28 16:53:48.499882314 +0000 UTC m=+131.488826297`
 - If you want to scale the deployment, first type the command below to see the status
   - `kubectl get deployments`
+
 Removing example node
+
 - `kubectl delete service hello-node`
 - `kubectl delete deployment hello-node`
 
 ##  Installing the node-problem-detector
 Installing the node-problem-detector
 - `kubectl apply -f https://k8s.io/examples/debug/node-problem-detector.yaml`
+
 Checking the node-problem-detector
+
 - `kubectl get pods -n kube-system node-problem-detector`[press Tab to finish]
 - `kubectl describe pod -n kube-system node-problem-detector`[press Tab to finish]
 - `kubectl logs -n kube-system node-problem-detector`[press Tab to finish
+
 Removing the node-problem-detector
+
 - `kubectl delete daemonset node-problem-detector-v0.1 -n kube-system]`
 
 ## Installing a failed pod
 - `kubectl apply -f kubernetes/testfail.yaml`
+
 Deleting the failed pod
+
 - `kubectl delete pod test-fail-exitcode`
 
 ## Running a Test DockerFile
@@ -49,7 +59,9 @@ CMD ["sleep", "inf"]
 - `docker build --tag dockerfile -f Dockerfile .`
 - `docker run -d --name running_container dockerfile`
 - `docker ps`
+
 Deleting the running container
+
 - `docker stop running_container`
 - `docker rmi dockerfile -f`
 - `docker rm running_container`
