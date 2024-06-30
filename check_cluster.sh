@@ -70,8 +70,8 @@ echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl debug node/[nodeName] 
 echo -e "${BOLD_WHITE}    - Deploys a pod to a node that you want to troubleshoot.${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Pods (NS: all) [Only displays problem pods, i.e. not 'running']${RESET}\n${BOLD_MAGENTA}"
 # Displays if any pods are not running correctly.
-output=$(kubectl get pod -A -o wide --field-selector status.phase!=Running --all-namespaces) 
-#output=$(kubectl get pods -o wide -A | grep -v Running)
+#output=$(kubectl get pod -A -o wide --field-selector status.phase!=Running --all-namespaces) 
+output=$(kubectl get pods -o wide -A | grep -v Running)
 #output=$(kubectl get pods -o wide -A)
 echo -e "$output"
 echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get pods -A${RESET}"
@@ -104,6 +104,8 @@ echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volumes (NS: all)${RESET}\n${BO
 kubectl get persistentvolumes -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volume Claims (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get persistentvolumeclaims -o wide -A | tail -n $defaultTailRows
+echo -e "${BOLD_GREEN}\n----- Cluster Jobs (NS: all)${RESET}\n${BOLD_MAGENTA}"
+kubectl get jobs -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Filtered) ${RESET}\n"
 kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${BOLD_MAGENTA}"

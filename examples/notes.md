@@ -9,10 +9,10 @@ Installing an example node (test container with a webserver) [Minikube example]
   - You will see the results in your browser.
 - If you are using a standard kubernetes cluster, type:  
   - `kubectl get services --sort-by=.metadata.name`
-    - Make sure to note the under the Ports column (i.e. 8080:30727/TCP), the number you are concern about is the '30727', if the External-IP column is NOT '<pending>' you can use that address.
+    - Make sure to note the under the **Ports** column (i.e. **8080:30727/TCP**), the number you are concern about is the **30727**, if the **External-IP** column is NOT **<pending>** you can use that address.
     - Otherwise, first determine which node the pod is running on (i.e. node01), type:
       - `kubectl get pods -o wide`
-      - Type the command below, and use the address in the INTERNAL-IP (i.e. 172.30.1.2) for the node the pod is running on (i.e. node01).
+      - Type the command below, and use the address in the **INTERNAL-IP** (i.e. **172.30.1.2**) for the node the pod is running on (i.e. **node01**).
         - `kubectl get nodes -o wide`
       - To see the output from the pod (this will have to be updated for your environment you are running based on the instruction above), type: 
         - `curl http://172.30.1.2:30727; echo`
@@ -25,7 +25,7 @@ Removing example node
 - `kubectl delete service hello-node`
 - `kubectl delete deployment hello-node`
 
-##  Installing the node-problem-detector
+##  Installing The node-problem-detector
 
 Installing the node-problem-detector
 
@@ -41,8 +41,9 @@ Removing the node-problem-detector
 
 - `kubectl delete daemonset node-problem-detector-v0.1 -n kube-system]`
 
-## Installing a failed pod
+## Installing a Failed Pod
 
+- `curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/examples/testfail.yaml -o testfail.yaml`
 - `kubectl apply -f kubernetes/testfail.yaml`
 
 Deleting the failed pod
