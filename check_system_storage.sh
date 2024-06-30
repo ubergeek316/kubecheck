@@ -46,11 +46,11 @@ echo -e "\n${BOLD_YELLOW}- Notes: Additions useful commands for related troubles
 echo "  - Ex: blkid /dev/sda3 (Finds or print block device properties)"
 echo "  - Ex: file -sL /dev/sda3 (Identifies file type, reading of block or character files, and follows of symlinks)\n${RESET}"
 echo -e "\n${BOLD_WHITE}----- Display Disk Usage of: Temp, Cache, Snaps, and Logs ${RESET}\n${BOLD_MAGENTA}"
-echo "- /var/tmp directory"
+echo -e "- /var/tmp directory\n"
 du -h /var/tmp | sort -h -r | head -n 10
-echo "- /var/cashe directory"
+echo -e "\n- /var/cashe directory\n"
 du -h /var/cache | sort -h -r | head -n 10
-echo "- /var/lib/snapd/snaps"
+echo -e "\n- /var/lib/snapd/snaps\n"
 du -h /var/lib/snapd/snaps | sort -h -r | head -n 10
 echo "- /var/log/"
 # Checks for large log Files
