@@ -42,9 +42,8 @@ kubectl -n kube-system logs kube-scheduler-controlplane | tail -n $defaultTailRo
 
 # These are all the pods not marked as controlplane
 echo -e "\n${BOLD_WHITE} ----- Additional Kube-System Pods with Log Files)${RESET}"
-echo -e "\n${BOLD_YELLOW} - Note: Use: kubectl -n kube-system logs [podName] | tail ${RESET}\n${BOLD_MAGENTA}"
 kubectl get pods -n kube-system | grep -v controlplane
-echo ""
+echo -e "\n${BOLD_YELLOW} - Note: Use: kubectl -n kube-system logs [podName] | tail ${RESET}\n${BOLD_MAGENTA}\n\n"
 
 # Notes:
 # The kubelet is responsible for running containers on the node
