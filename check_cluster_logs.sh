@@ -16,26 +16,26 @@ defaultTailRows=10
 defaultGrepQuery="fail|warn|error|oom|dump|crash"
 
 # Hold the current state of the Kubernetes clustter
-echo -e "\n${BOLD_WHITE} ----- Etcd (ControlPlane) (filtered: $defaultGrepQuery) [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
+echo -e "\n${BOLD_WHITE} ----- Etcd (ControlPlane) (filtered: $defaultGrepQuery) [Last 10 Lines]${RESET}\n"
 kubectl -n kube-system logs etcd-controlplane | grep --color=always -iE $defaultGrepQuery | tail -n $defaultTailRows
 echo -e "\n${BOLD_WHITE} ----- Etcd (ControlPlane) (Unfiltered) [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
 kubectl -n kube-system logs etcd-controlplane | tail -n $defaultTailRows
 
 # The API Server, responsible for serving the API
-echo -e "\n${BOLD_WHITE} ----- API Server (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
+echo -e "\n${BOLD_WHITE} ----- API Server (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n"
 kubectl -n kube-system logs kube-apiserver-controlplane | grep --color=always -iE $defaultGrepQuery | tail -n $defaultTailRows
 echo -e "\n${BOLD_WHITE} ----- API Server (ControlPlane) (Unfiltered) [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
 kubectl -n kube-system logs kube-apiserver-controlplane | tail -n $defaultTailRows
 
 # A component that runs most Kubernetes built-in controllers with the notable 
 # exception of scheduling (the kube-scheduler handles scheduling).
-echo -e "\n${BOLD_WHITE} ----- Kube Controller (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
+echo -e "\n${BOLD_WHITE} ----- Kube Controller (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n"
 kubectl -n kube-system logs kube-controller-manager-controlplane | grep --color=always -iE $defaultGrepQuery | tail -n $defaultTailRows
 echo -e "\n${BOLD_WHITE} ----- Kube Controller (ControlPlane) (Unfiltered) [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
 kubectl -n kube-system logs kube-controller-manager-controlplane | tail -n $defaultTailRows
 
 # Scheduler, responsible for making scheduling decisions
-echo -e "\n${BOLD_WHITE} ----- Kube Schuduler (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
+echo -e "\n${BOLD_WHITE} ----- Kube Schuduler (ControlPlane) (filtered: $defaultGrepQuery)  [Last 10 Lines]${RESET}\n"
 kubectl -n kube-system logs kube-scheduler-controlplane | grep --color=always -iE $defaultGrepQuery | tail -n $defaultTailRows
 echo -e "\n${BOLD_WHITE} ----- Kube Schuduler (ControlPlane) (Unfiltered) [Last 10 Lines]${RESET}\n${BOLD_MAGENTA}"
 kubectl -n kube-system logs kube-scheduler-controlplane | tail -n $defaultTailRows
