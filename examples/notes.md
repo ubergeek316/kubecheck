@@ -35,3 +35,22 @@ Checking the node-problem-detector
 - kubectl apply -f kubernetes/testfail.yaml
 Deleting the failed pod
 - kubectl delete pod test-fail-exitcode
+
+## Running a Test DockerFile
+- vim Dockerfile
+Contents of the Dockerfile
+```
+FROM ubuntu:latest
+# Install essential utilities (optional)
+RUN apt update && apt install -y --no-install-recommends busybox
+# Define the main process (background command)
+CMD ["sleep", "inf"]
+```
+- docker build --tag dockerfile -f Dockerfile .
+- docker run -d --name running_container dockerfile
+- docker ps
+Deleting the running container
+- docker stop running_container
+- docker rmi dockerfile -f
+- docker rm running_container
+
