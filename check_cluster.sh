@@ -74,7 +74,7 @@ output=$(kubectl get pod -A -o wide --field-selector status.phase!=Running --all
 #output=$(kubectl get pods -o wide -A | grep -v Running)
 #output=$(kubectl get pods -o wide -A)
 echo -e "$output"
-echo -e "${BOLD_WHITE}\n ** Suggestion (More Info): kubectl get pods -A${RESET}"
+echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get pods -A${RESET}"
 echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get all -A${RESET}"
 # Displays kubernetes component status
 echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not 'ok']${RESET}\n${BOLD_MAGENTA}"
@@ -87,7 +87,7 @@ APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAM
 # Gets the token value containing the secret token
 TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
 # Explore the API with TOKEN
-curl -X GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure  | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+curl -sX GET $APISERVER/livez?verbose --header "Authorization: Bearer $TOKEN" --insecure  | grep --color=always -ZEv " ok|livez check passed" || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get deployments -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
