@@ -64,30 +64,38 @@ elif [ "$1" == "lastreboot" ]; then
 elif [ "$1" == "storage" ]; then
     downloadAndRun check_system_storage.sh
     exit
+elif [ "$1" == "clusterlogs" ]; then
+    downloadAndRun check_cluster_logs.sh
+    exit
 elif [ "$1" == "refresh" ]; then
     rm ./kubecheck.sh
     curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
     exit
 else 
     echo -e "\n${BOLD_YELLOW}Help Information (version 1.0):"
-    echo -e "${BOLD_YELLOW}- To check a clsuter, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh cluster"
-    echo -e "${BOLD_YELLOW}- To check a pod, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh pod [podName] [nameSpace]"
-    echo -e "${BOLD_YELLOW}- To frees storage by deleting temporary files and clean system resources on a node, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh cleanstorage"
-    echo -e "${BOLD_YELLOW}- To check the network subsystem for errors on a node , type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh network "
-    echo -e "${BOLD_YELLOW}- To check performance on a node, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh performance"
-    echo -e "${BOLD_YELLOW}- To check processes on a node, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh processes"
-    echo -e "${BOLD_YELLOW}- To check last reboot on a node, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh lastreboot"
-    echo -e "${BOLD_YELLOW}- To check storage on a node, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh storage"
-    echo -e "${BOLD_YELLOW}- To refresh the script with the latest version, type:"
-    echo -e "${BOLD_WHITE}  ./kubecheck.sh refresh"
+    echo -e "${BOLD_YELLOW}- Cluster options:"
+    echo -e "${BOLD_YELLOW}  - To check a clsuter, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh cluster"
+    echo -e "${BOLD_YELLOW}  - To check a pod in a cluster, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh pod [podName] [nameSpace]"
+    echo -e "${BOLD_YELLOW}- Node options:"
+    echo -e "${BOLD_YELLOW}  - Frees storage by deleting temporary files and clean system resources on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh cleanstorage"
+    echo -e "${BOLD_YELLOW}  - To check the network subsystem for errors on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh network "
+    echo -e "${BOLD_YELLOW}  - To check performance on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh performance"
+    echo -e "${BOLD_YELLOW}  - To check processes on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh processes"
+    echo -e "${BOLD_YELLOW}  - To check last reboot on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh lastreboot"
+    echo -e "${BOLD_YELLOW}  - To check storage on a node, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh storage"
+    echo -e "${BOLD_YELLOW}  - To check cluster logs, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh storage"
+    echo -e "${BOLD_YELLOW}- Miscellanous options:"
+    echo -e "${BOLD_YELLOW}  - To refresh the script with the latest version, type:"
+    echo -e "${BOLD_WHITE}      ./kubecheck.sh refresh"
     echo -e "${RESET}"
 fi
 

@@ -11,7 +11,7 @@
 #              - The ability to query Container Runtime
 #              - Checking any system information, CPU, Memory, Storage, Network
 # Update:      15-June-2024
-# Sytax:       ./check_cluster.sh
+# Sytax:       ./check_c:luster.sh
 # Example:     ./check_cluster.sh 
 # Notes: 
 # - ANSI color aliases are setup in the kubecheck.sh file
@@ -148,3 +148,5 @@ echo -e "${BOLD_WHITE}  - Allows you enter a running pod to inspect it. ${RESET}
 #echo -e "${BOLD_WHITE}- ${RESET}"
 echo ""
 #fi
+# Check pods with taints
+#kubectl get nodes -o json | jq '.items[].spec.taints'
