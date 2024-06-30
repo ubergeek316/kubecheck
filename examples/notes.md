@@ -48,7 +48,9 @@ Deleting the failed pod
 
 ## Running a Test DockerFile
 - `vim Dockerfile`
+
 Contents of the Dockerfile
+
 ```
 FROM ubuntu:latest
 # Install essential utilities (optional)
