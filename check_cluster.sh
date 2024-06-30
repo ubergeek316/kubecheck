@@ -74,7 +74,7 @@ echo -e "${BOLD_GREEN}\n----- Cluster Pods (NS: all) [Only displays problem pods
 output=$(kubectl get pods -o wide -A | grep -v Running)
 #output=$(kubectl get pods -o wide -A)
 echo -e "$output"
-echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get pods -A${RESET}"
+echo -e "\n${BOLD_WHITE} ** Suggestion (More Info): kubectl get pods -A${RESET}"
 echo -e "${BOLD_WHITE} ** Suggestion (More Info): kubectl get all -A${RESET}"
 # Displays kubernetes component status
 echo -e "${BOLD_GREEN}\n----- Component Status [only displays problems, i.e. not 'ok']${RESET}\n${BOLD_MAGENTA}"
@@ -106,6 +106,8 @@ echo -e "${BOLD_GREEN}\n----- Cluster Persistent Volume Claims (NS: all)${RESET}
 kubectl get persistentvolumeclaims -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Jobs (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get jobs -o wide -A | tail -n $defaultTailRows
+echo -e "${BOLD_GREEN}\n----- Cluster CronJobs (NS: all)${RESET}\n${BOLD_MAGENTA}"
+kubectl get cronjobs -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Filtered) ${RESET}\n"
 kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${BOLD_MAGENTA}"
@@ -114,6 +116,7 @@ echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be ins
 # Check if metrics-server deployment exists
 # To install the metrics-server
 # kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
 # More information: https://kubernetes-sigs.github.io/metrics-server/
 metrics_server_deployment=$(kubectl get deployments -n kube-system 2>/dev/null | grep metrics-server)
 if [[ -z "$metrics_server_deployment" ]]; then
