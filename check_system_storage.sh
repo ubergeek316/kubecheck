@@ -25,7 +25,7 @@ echo -e "Linux Version: $(uname -a)"
 echo -e "Uptime:        $(uptime)"
 echo -e "${BOLD_WHITE}----------------------------------------------${RESET}"
 echo -e "\n${BOLD_WHITE}----- Finds the 10 largest files${RESET}\n${BOLD_MAGENTA}"
-du -h --max-depth=1  / 2> /dev/null | sort -n -h | head -n 10
+du -h --max-depth=1  / 2> /dev/null | sort -h -r | head -n 10
 # Additional searches for research purposes
 #find / -maxdepth 1 -type d -mindepth 1 -exec du -hs {} \; 2> /dev/null
 #find / -type f -size +1024k
