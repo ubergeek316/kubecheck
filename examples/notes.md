@@ -16,19 +16,25 @@ Installing an example node and exposing a load balancer (test container with a w
 - If you are using a standard kubernetes cluster, type:  
   - `kubectl get services -o wide --sort-by=.metadata.name`
     - Make sure to note the under the **Ports** column (i.e. **8080:30727/TCP**), the number you are concern about is the **31026**, if the **External-IP** column is NOT **<pending>** you can use that address.
-``NAME           TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)...
+```
+NAME           TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)...
 loadbalancer   LoadBalancer   xx.xxx.xxx.xxx   aaaaaaaaa     xx:31026/TCP...
-                                                                ^^^^^``
+                                                                ^^^^^
+```
     - Otherwise, first determine which **NODE** the pod is running on (i.e. node01), type:
       - `kubectl get pods -o wide`
-``NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE...
+```
+NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE...
 hello-node-7694c-z7ch2   1/1     Running   0          17s   192.168.1.4   node01...
-                                                                          ^^^^^^``
+                                                                          ^^^^^^
+```
       - Type the command below, and use the address in the **INTERNAL-IP** (i.e. **172.30.2.2**) for the node the pod is running on (i.e. **node01**).
         - `kubectl get nodes -o wide`
-``NAME           STATUS   ROLES           AGE   VERSION   INTERNAL-IP...
+```
+NAME           STATUS   ROLES           AGE   VERSION   INTERNAL-IP...
 node01         Ready    <none>          xxx   vx.xx.x   172.30.2.2...
-                                                        ^^^^^^^^^^``
+                                                        ^^^^^^^^^^
+```
       - To see the output from the pod (this will have to be updated for your environment you are running based on the instruction above), type: 
         - `curl http://172.30.2.2:31026; echo` (Syntax: `curl -s http://<node-INTERNAL-IP:servicePORT>; echo`)
       - This should display something like: `NOW: 2024-06-28 16:53:48.499882314 +0000 UTC m=+131.488826297`
@@ -74,7 +80,8 @@ Deleting the failed pod
 
 - kubectl create namespace demonstration
 - Create the file below using the heredoc
-``cat << EOF >  resourcesquota.yaml
+```
+cat << EOF >  resourcesquota.yaml
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -85,7 +92,8 @@ spec:
     requests.memory: 1Gi
     limits.cpu: "2"
     limits.memory: 2Gi
-EOF``
+EOF
+```
 - kubectl get namespaces
 - kubectl describe namespaces demonstration
 - kubectl apply -f resourcesquota.yaml -n demonstration
