@@ -93,7 +93,8 @@ kubectl get deployments -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get daemonsets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments Status${RESET}\n${BOLD_MAGENTA}"
-kubectl rollout status deployment | tail -n $defaultTailRows
+# added a timeout if a deployment was stuck so it doesn't hang the script
+timeout 10 kubectl rollout status deployment | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Replicasets (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get replicasets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Services (NS: all)${RESET}\n${BOLD_MAGENTA}"
@@ -115,7 +116,6 @@ kubectl get events --sort-by=.metadata.creationTimestamp -A | tail -n $defaultTa
 echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be install)${RESET}\n${BOLD_MAGENTA}"
 # Check if metrics-server deployment exists
 # To install the metrics-server
-# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 # kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
 # More information: https://kubernetes-sigs.github.io/metrics-server/
 metrics_server_deployment=$(kubectl get deployments -n kube-system 2>/dev/null | grep metrics-server)
@@ -127,14 +127,15 @@ else
     echo -e "${BOLD_CYAN}\n-- Top Pods --${RESET}${BOLD_MAGENTA}\n"
     kubectl top pods | tail -n $defaultTailRows
 fi
-echo -e "${BOLD_GREEN}\n----- Checking Container Processes${RESET}\n${BOLD_MAGENTA}"
-if command -v docker >/dev/null 2>&1; then
-    criRuntime="docker"
-    docker ps  | tail -n $defaultTailRows
-elif command -v podman >/dev/null 2>&1; then
-    criRuntime="podman"
-    podman ps | tail -n $defaultTailRows
-fi
+# Saving for future use
+#echo -e "${BOLD_GREEN}\n----- Checking Container Processes${RESET}\n${BOLD_MAGENTA}"
+#if command -v docker >/dev/null 2>&1; then
+#    criRuntime="docker"
+#    docker ps  | tail -n $defaultTailRows
+#elif command -v podman >/dev/null 2>&1; then
+#    criRuntime="podman"
+#    podman ps | tail -n $defaultTailRows
+#fi
 echo -e "${BOLD_GREEN}\n----- Additional Troubleshooting Commands:${RESET}\n"
 #echo -e "${BOLD_YELLOW}- kubectl config view${RESET}"
 echo -e "${BOLD_WHITE}- kubectl get pod -n nameSpace podName -o json${RESET}"
