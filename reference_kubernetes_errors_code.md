@@ -1,5 +1,5 @@
 Following is the list of official Kubernetes pod errors with error descriptions.
-
+| Error Code             | Description                                                                                           |
 |------------------------|-------------------------------------------------------------------------------------------------------|
 | Pod Error Type         | Error Description                                                                                     |
 | ErrImagePull           | If kubernetes is not able to pull the image mentioned in the manifest.                                |
@@ -19,3 +19,5 @@ Following is the list of official Kubernetes pod errors with error descriptions.
 | ErrKillPodSandbox      | A pod sandbox did not stop successfully.                                                              |
 | ErrSetupNetwork        | Network initialization failed.                                                                        |
 | ErrTeardownNetwork     | n/a                                                                                                   |
+|------------------------|-------------------------------------------------------------------------------------------------------|
+
