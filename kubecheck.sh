@@ -25,15 +25,17 @@ export BOLD_MAGENTA='\033[1;35m'
 export BOLD_CYAN='\033[1;36m'
 export BOLD_WHITE='\033[1;37m'
 
-# Loads autocompletion script
-source completely.bash
-
 # Downloads and runs the script from the repository
+# *** Note: Functionality needs to be reenabled after productionalized
 function downloadAndRun() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1 $2 $3
-    rm $1
+    #rm $1
     }   
+
+# Loads autocompletion script
+downloadAndRun completely.bash
+source completely.bash
 
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
