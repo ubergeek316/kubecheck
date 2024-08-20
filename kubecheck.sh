@@ -26,10 +26,10 @@ export BOLD_CYAN='\033[1;36m'
 export BOLD_WHITE='\033[1;37m'
 
 # Downloads and runs the script from the repository
-# *** Note: Functionality needs to be reenabled after productionalized
 function downloadAndRun() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1 $2 $3
+    # *** Note: Functionality needs to be reenabled after productionalized
     #rm $1
     }   
 
@@ -73,7 +73,8 @@ elif [ "$1" == "clusterlogs" ]; then
     downloadAndRun check_cluster_logs.sh
     exit
 elif [ "$1" == "refresh" ]; then
-    rm ./kubecheck.sh
+    # ** Temporarily disabled **
+    #rm ./kubecheck.sh
     curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
     exit
 else 
