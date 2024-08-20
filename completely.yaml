@@ -1,0 +1,41 @@
+#- Cluster options:
+#  - To check a clsuter, type:
+#    ./kubecheck.sh cluster
+#  - To check a pod in a cluster, type:
+#    ./kubecheck.sh pod [podName] [nameSpace]
+#  - To check cluster kube-system logs, type:
+#    ./kubecheck.sh storage
+#- Node options:
+#  - Frees storage by deleting temporary files and clean system resources on a node, type:
+#    ./kubecheck.sh cleanstorage
+#  - To check the network subsystem for errors on a node, type:
+#    ./kubecheck.sh network
+#  - To check performance on a node, type:
+#    ./kubecheck.sh performance
+#  - To check processes on a node, type:
+#    ./kubecheck.sh processes
+#  - To check last reboot on a node, type:
+#    ./kubecheck.sh lastreboot
+#  - To check storage on a node, type:
+#    ./kubecheck.sh storage
+#- Miscellaneous options:
+#  - To refresh the script with the latest version, type:
+#    ./kubecheck.sh refresh
+
+kubecheck.sh:
+- refresh
+- storage
+- lastreboot
+- processes
+- performance
+- cluster
+- storage
+- cleanstorage
+- network
+- pod
+
+kubecheck.sh pod:
+- $(kubectl get pods -A --no-headers -o custom-columns=":metadata.name")
+
+kubecheck.sh pod*-n: 
+- $(kubectl get namespaces --no-headers -o custom-columns=":metadata.name")

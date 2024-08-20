@@ -94,7 +94,11 @@ echo -e "${BOLD_GREEN}\n----- Cluster Daemonsets (NS: all)${RESET}\n${BOLD_MAGEN
 kubectl get daemonsets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Deployments Status${RESET}\n${BOLD_MAGENTA}"
 # added a timeout if a deployment was stuck so it doesn't hang the script
-timeout 10 kubectl rollout status deployment | tail -n $defaultTailRows
+timeout_cmd="timeout"
+if ! command -v timeout > /dev/null; then
+  timeout_cmd="gtimeout"
+fi
+timeout_cmd 20 kubectl rollout status deployment | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Replicasets (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get replicasets  -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Services (NS: all)${RESET}\n${BOLD_MAGENTA}"
@@ -110,7 +114,7 @@ kubectl get jobs -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster CronJobs (NS: all)${RESET}\n${BOLD_MAGENTA}"
 kubectl get cronjobs -o wide -A | tail -n $defaultTailRows
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Filtered) ${RESET}\n"
-kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error " | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
+kubectl get events --sort-by=.metadata.creationTimestamp -A | grep --color=always -Ei "warning |fail |error |Insufficient memory" | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- Cluster Events (NS: all) (Unfiltered) ${RESET}\n${BOLD_MAGENTA}"
 kubectl get events --sort-by=.metadata.creationTimestamp -A | tail -n $defaultTailRows || echo -e "  ${BOLD_YELLOW}-- No Problems Found --${RESET}"
 echo -e "${BOLD_GREEN}\n----- System Metrics (requires 'metric-server' to be install)${RESET}\n${BOLD_MAGENTA}"

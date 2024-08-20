@@ -25,6 +25,9 @@ export BOLD_MAGENTA='\033[1;35m'
 export BOLD_CYAN='\033[1;36m'
 export BOLD_WHITE='\033[1;37m'
 
+# Loads autocompletion script
+source completely.bash
+
 # Downloads and runs the script from the repository
 function downloadAndRun() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1

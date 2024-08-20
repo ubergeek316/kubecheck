@@ -1,0 +1,17 @@
+Information: https://github.com/DannyBen/completely
+
+Installing Completely:
+- Install or Upgrade X-Code
+  - sudo xcode-select --install
+  - Open the System Settings, update the X-Code software
+- brew install brew-gem
+- brew gem install completely
+- completely init
+
+Creating a script:
+- vim completely.yaml
+  - See: https://github.com/DannyBen/completely
+
+Compiling a script:
+- completely generate
+- source completely.bash
