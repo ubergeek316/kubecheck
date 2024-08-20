@@ -29,8 +29,7 @@ export BOLD_WHITE='\033[1;37m'
 function downloadAndRun() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1 $2 $3
-    # *** Note: Functionality needs to be reenabled after productionalized
-    #rm $1
+    rm $1
     }   
 
 # Loads autocompletion script
@@ -45,7 +44,7 @@ elif [ "$1" == "pod" ]; then
     # Check if a podname and namespace are being passed
     if [ ! -z $2 ]; then
         # Checks a kubernetes pod (with parameters)
-        downloadAndRun check_pod.sh $2 $3
+        downloadAndRun check_pod.sh $2 $4
     else
         # Checks a kubernetes pod (without parameters)
         downloadAndRun check_pod.sh
@@ -73,8 +72,7 @@ elif [ "$1" == "clusterlogs" ]; then
     downloadAndRun check_cluster_logs.sh
     exit
 elif [ "$1" == "refresh" ]; then
-    # ** Temporarily disabled **
-    #rm ./kubecheck.sh
+    rm ./kubecheck.sh
     curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
     exit
 else 
@@ -83,7 +81,7 @@ else
     echo -e "${BOLD_YELLOW}  - To check a clsuter, type:"
     echo -e "${BOLD_WHITE}    ./kubecheck.sh cluster"
     echo -e "${BOLD_YELLOW}  - To check a pod in a cluster, type:"
-    echo -e "${BOLD_WHITE}    ./kubecheck.sh pod [podName] [nameSpace]"
+    echo -e "${BOLD_WHITE}    ./kubecheck.sh pod [podName] -n [nameSpace]"
     echo -e "${BOLD_YELLOW}  - To check cluster kube-system logs, type:"
     echo -e "${BOLD_WHITE}    ./kubecheck.sh storage"
     echo -e "${BOLD_YELLOW}- Node options:"
