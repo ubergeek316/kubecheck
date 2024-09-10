@@ -22,9 +22,9 @@
 # Underline: \033[4m
 
 # Colors Text Purple
-purple() {
-    echo "\033[35m$@\033[0m"
-    };
+#purple() {
+#    echo "\033[35m$@\033[0m"
+#    };
 
 # Displays the output of the kubectl commands
 display_kubernetes() {
@@ -45,7 +45,8 @@ kubectl get persistentvolumes)
 }
 
 # Export the function so it can be used by watch
-export -f purple
+#export -f purple
+unset display_kubernetes
 export -f display_kubernetes
 
 # Watch the output of the kubectl commands
