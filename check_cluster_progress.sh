@@ -37,11 +37,13 @@ kubectl get deployments|tail -n 10
 echo -e "${BOLD_GREEN}-----[Events]\n${BOLD_MAGENTA}";
 kubectl events|tail -n 9
 echo -e"${BOLD_GREEN}-----[Logs]\n${BOLD_MAGENTA}";
-kubectl logs deployments/dingdong2|tail -n 9
+if [ ! -z $1 ]; then
+    kubectl logs $1 |tail -n 9
+fi
 echo -e "${BOLD_GREEN}-----[persistentvolumeclaims]\n${BOLD_MAGENTA}";
 kubectl get persistentvolumeclaims
 echo -e "${BOLD_GREEN}-----[persistentvolumes]\n${BOLD_MAGENTA}";
-kubectl get persistentvolumes)
+kubectl get persistentvolumes
 }
 
 # Export the function so it can be used by watch
