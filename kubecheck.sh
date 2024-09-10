@@ -71,6 +71,9 @@ elif [ "$1" == "storage" ]; then
 elif [ "$1" == "clusterlogs" ]; then
     downloadAndRun check_cluster_logs.sh
     exit
+elif [ "$1" == "clusterprogress" ]; then
+    downloadAndRun check_cluster_progress.sh
+    exit
 elif [ "$1" == "refresh" ]; then
     rm ./kubecheck.sh
     curl -s  https://raw.githubusercontent.com/ubergeek316/kubecheck/main/kubecheck.sh -o kubecheck.sh; chmod +x kubecheck.sh; ./kubecheck.sh
@@ -84,6 +87,8 @@ else
     echo -e "${BOLD_WHITE}    ./kubecheck.sh pod [podName] -n [nameSpace]"
     echo -e "${BOLD_YELLOW}  - To check cluster kube-system logs, type:"
     echo -e "${BOLD_WHITE}    ./kubecheck.sh storage"
+    echo -e "${BOLD_YELLOW}  - To check cluster progress, type:"
+    echo -e "${BOLD_WHITE}    ./kubecheck.sh clusterprogress"
     echo -e "${BOLD_YELLOW}- Node options:"
     echo -e "${BOLD_YELLOW}  - Frees storage by deleting temporary files and clean system resources on a node, type:"
     echo -e "${BOLD_WHITE}    ./kubecheck.sh cleanstorage"

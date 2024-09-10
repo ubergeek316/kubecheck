@@ -33,6 +33,7 @@ kubecheck.sh:
 - cleanstorage
 - network
 - pod
+- clusterprogress
 
 kubecheck.sh pod:
 - $(kubectl get pods -A --no-headers -o custom-columns=":metadata.name")
