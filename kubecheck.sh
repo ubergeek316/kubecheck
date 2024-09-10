@@ -32,7 +32,8 @@ function downloadAndRun() {
     rm $1
     }   
 
-function downloadAndRun2() {
+# Downloads and runs the script from the repository
+function downloadAnd2Run() {
     echo -e "-- Loading BASH Autocomplete"
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1
@@ -40,7 +41,7 @@ function downloadAndRun2() {
     }
 
 # Loads autocompletion script
-downloadAndRun2 completely.bash
+downloadAnd2Run completely.bash
 
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
