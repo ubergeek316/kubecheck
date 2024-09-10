@@ -34,7 +34,6 @@ function downloadAndRun() {
 
 # Loads autocompletion script
 downloadAndRun completely.bash
-source completely.bash
 
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
