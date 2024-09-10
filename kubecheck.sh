@@ -32,7 +32,7 @@ function downloadAndRun() {
     rm $1
     }   
 
-function downloadAndRun() {
+function downloadAndRun2() {
     echo -e "-- Loading BASH Autocomplete"
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1
