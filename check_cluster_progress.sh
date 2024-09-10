@@ -28,20 +28,20 @@ purple() {
 
 # Displays the output of the kubectl commands
 display_kubernetes() {
-echo "-----[Pods]";
-purple "$(kubectl get pods|tail -n 10)"
-echo "-----[Services]";
-purple "$(kubectl get services|tail -n 10)";
-echo "-----[Deployment]";
-purple "$(kubectl get deployments|tail -n 10)";
-echo "-----[Events]";
-purple "$(kubectl events|tail -n 9)";
-echo "-----[Logs]";
-purple "$(kubectl logs deployments/dingdong2|tail -n 9)";
-echo "-----[persistentvolumeclaims]";
-purple "$(kubectl get persistentvolumeclaims)";
-echo "-----[persistentvolumes]";
-purple "$(kubectl get persistentvolumes)";
+echo -e "${BOLD_GREEN}-----[Pods]\n${BOLD_MAGENTA}";
+kubectl get pods|tail -n 10
+echo -e "${BOLD_GREEN}-----[Services]\n${BOLD_MAGENTA}";
+kubectl get services|tail -n 10
+echo -e "${BOLD_GREEN}-----[Deployment]\n${BOLD_MAGENTA}";
+kubectl get deployments|tail -n 10
+echo -e "${BOLD_GREEN}-----[Events]\n${BOLD_MAGENTA}";
+kubectl events|tail -n 9
+echo -e"${BOLD_GREEN}-----[Logs]\n${BOLD_MAGENTA}";
+kubectl logs deployments/dingdong2|tail -n 9
+echo -e "${BOLD_GREEN}-----[persistentvolumeclaims]\n${BOLD_MAGENTA}";
+kubectl get persistentvolumeclaims
+echo -e "${BOLD_GREEN}-----[persistentvolumes]\n${BOLD_MAGENTA}";
+kubectl get persistentvolumes)
 }
 
 # Export the function so it can be used by watch
