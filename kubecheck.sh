@@ -32,9 +32,9 @@ function downloadAndRun() {
     rm $1
     }   
 
-# Downloads and runs the script from the repository
+# Downloads and runs the script from the repository (bash autocomplete file)
 function downloadAnd2Run() {
-    echo -e "-- Loading BASH Autocomplete"
+    echo -e "${BOLD_YELLOW}-- Loading BASH Autocomplete${RESET}"
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
     source $1
     rm $1
