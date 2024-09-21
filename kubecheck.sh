@@ -33,20 +33,14 @@ function downloadAndRun() {
     }   
 
 # Downloads and runs the script from the repository (bash autocomplete file)
+# Note: The autocomplete has to be execute manually until I can overcome loading into the
+#       current shell context from a script that is being called
 function downloadAnd2Run() {
-    echo -e "${BOLD_YELLOW}-- Loading BASH Autocomplete${RESET}"
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o /tmp/$1
-    echo "-----"
-    ls -l /tmp/$1
-    echo "-----"
-    # Loads the autocomplete into the current user context (otherwise it only gets
-    # loaded into running script context and it is uselsess)
-    eval "$(source /tmp/$1)"
-    echo "source /tmp/$1"
+    eval (source /tmp/$1)
+    echo -e "${BOLD_YELLOW}- To enable the autocomplete feature in the current shell,"
+    echo -e "  type the following command: ${BOLD_WHITE}source /tmp/$1${RESET}"
     }
-
-# Loads autocompletion script
-downloadAnd2Run completely.bash
 
 if [ "$1" == "cluster" ]; then 
     # Checks a kubernetes cluster
@@ -118,5 +112,7 @@ else
     echo -e "${BOLD_YELLOW}  - To refresh the script with the latest version, type:"
     echo -e "${BOLD_WHITE}    ./kubecheck.sh refresh"
     echo -e "${RESET}"
+    # Loads autocompletion script
+    downloadAnd2Run completely.bash
 fi
 
