@@ -37,7 +37,7 @@ function downloadAndRun() {
 #       current shell context from a script that is being called
 function downloadAnd2Run() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o /tmp/$1
-    eval `source /tmp/$1`
+    #eval `source /tmp/$1`
     echo -e "${BOLD_YELLOW}- To enable the autocomplete feature in the current shell,"
     echo -e "  type the following command: ${BOLD_WHITE}source /tmp/$1${RESET}"
     }
