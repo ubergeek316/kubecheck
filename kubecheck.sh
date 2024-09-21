@@ -35,14 +35,14 @@ function downloadAndRun() {
 # Downloads and runs the script from the repository (bash autocomplete file)
 function downloadAnd2Run() {
     echo -e "${BOLD_YELLOW}-- Loading BASH Autocomplete${RESET}"
-    curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
+    curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o /tmp/$1
     echo "-----"
-    cat $1
+    ls -l $1
     echo "-----"
     # Loads the autocomplete into the current user context (otherwise it only gets
     # loaded into running script context and it is uselsess)
-    eval "$(source $1)"
-    rm $1
+    eval "$(source /tmp/$1)"
+    echo "source /tmp/$1"
     }
 
 # Loads autocompletion script
