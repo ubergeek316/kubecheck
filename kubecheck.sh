@@ -28,7 +28,9 @@ export BOLD_WHITE='\033[1;37m'
 # Downloads and runs the script from the repository
 function downloadAndRun() {
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o $1
-    source $1 $2 $3
+    # Loads the autocomplete into the current user context (otherwise it only gets
+    # loaded into running script context and it is uselsess)
+    eval "$(source $1 $2 $3)"
     rm $1
     }   
 
