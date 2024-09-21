@@ -37,7 +37,7 @@ function downloadAnd2Run() {
     echo -e "${BOLD_YELLOW}-- Loading BASH Autocomplete${RESET}"
     curl -s https://raw.githubusercontent.com/ubergeek316/kubecheck/main/$1 -o /tmp/$1
     echo "-----"
-    ls -l $1
+    ls -l /tmp/$1
     echo "-----"
     # Loads the autocomplete into the current user context (otherwise it only gets
     # loaded into running script context and it is uselsess)
