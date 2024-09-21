@@ -49,8 +49,8 @@ kubectl get persistentvolumes
 # Export the function so it can be used by watch
 #export -f purple
 unset display_kubernetes
-declare -f display_kubernetes
 export -f display_kubernetes
+declare -f display_kubernetes
 
 # Watch the output of the kubectl commands
 #watch -c display_kubernetes
