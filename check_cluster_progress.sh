@@ -53,4 +53,4 @@ declare -f display_kubernetes
 export -f display_kubernetes
 
 # Watch the output of the kubectl commands
-watch -c display_kubernetes
+#watch -c display_kubernetes
